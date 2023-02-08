@@ -14,8 +14,8 @@ function createCard(toys){
     card.classList = 'card'
     toyCollection.append(card);
     
-    let cardId = document.createElement('p');
-    cardId.innerText = toy.id;
+    // let cardId = document.createElement('p');
+    // cardId.innerText = toy.id;
 
     let cardToyName = document.createElement('h2');
     cardToyName.textContent = toy.name
@@ -36,12 +36,21 @@ function createCard(toys){
     cardButton.innerHTML = 'Likes' + ' &#x1F354'
     
 
-    card.append(cardId, cardToyName, cardImg, cardLikes, cardButton)
+    card.append(cardToyName, cardImg, cardLikes, cardButton)
 
     cardButton.addEventListener('click', (e) =>{
       debugger
-      cardLikes += 1;
-      fetch(`http://localhost:3000/toys${cardId}`)
+      cardLikes.textContent++;
+      fetch(`http://localhost:3000/toys/${toy.id}`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type" : "application/json",
+          Accept : "application/json"
+        },
+        body: JSON.stringify({
+          likes:cardLikes.textContent
+        })
+      })
     })
   });
 }
