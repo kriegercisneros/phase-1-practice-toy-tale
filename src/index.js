@@ -13,11 +13,15 @@ function createCard(toys){
     const card = document.createElement('div');
     card.classList = 'card'
     toyCollection.append(card);
+    
+    let cardId = document.createElement('p');
+    cardId.innerText = toy.id;
 
     let cardToyName = document.createElement('h2');
     cardToyName.textContent = toy.name
     
     
+
     let cardImg = document.createElement('img');
     cardImg.src = toy.image; 
     cardImg.classList = 'toy-avatar'
@@ -32,8 +36,13 @@ function createCard(toys){
     cardButton.innerHTML = 'Likes' + ' &#x1F354'
     
 
-    card.append(cardToyName, cardImg, cardLikes, cardButton)
+    card.append(cardId, cardToyName, cardImg, cardLikes, cardButton)
 
+    cardButton.addEventListener('click', (e) =>{
+      debugger
+      cardLikes += 1;
+      fetch(`http://localhost:3000/toys${cardId}`)
+    })
   });
 }
 
@@ -57,6 +66,11 @@ toyForm.addEventListener('submit', (event) => {
   })
 })
 
+//click on a like button to 1. patch to :id, updating num of likes
+//2.like count updated in DOM w/o refreshing 
+
+
+
 let addToy = false;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -72,3 +86,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
